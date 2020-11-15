@@ -64,4 +64,4 @@ EOF
 cat /etc/server.properties
 
 # Start kafka
-/usr/local/kafka/kafka_2.12-${KAFKA_VERSION}/bin/kafka-server-start.sh /etc/server.properties
+/usr/local/kafka/bin/kafka-server-start.sh /etc/server.properties
