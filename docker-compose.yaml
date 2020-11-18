@@ -38,6 +38,8 @@ services:
         KAFKA_VERSION: 2.2.0
     image: kafka:2.2.0
     hostname: broker1
+    ports:
+      - "127.0.0.1:9092:9092"
     depends_on:
       - "zoo1"
       - "zoo2"
