@@ -7,6 +7,9 @@ services:
     hostname: zoo1
     ports:
       - "127.0.0.1:2181:2181"
+    volumes:
+      - zoo1_data:/data
+      - zoo1_datalog:/datalog
     environment:
       ZOO_MY_ID: 1
       ZOO_SERVERS: server.1=0.0.0.0:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
@@ -17,6 +20,9 @@ services:
     hostname: zoo2
     ports:
       - "127.0.0.1:2182:2181"
+    volumes:
+      - zoo2_data:/data
+      - zoo2_datalog:/datalog
     environment:
       ZOO_MY_ID: 2
       ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3:2888:3888
@@ -27,6 +33,9 @@ services:
     hostname: zoo3
     ports:
       - "127.0.0.1:2183:2181"
+    volumes:
+      - zoo3_data:/data
+      - zoo3_datalog:/datalog
     environment:
       ZOO_MY_ID: 3
       ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=0.0.0.0:2888:3888
@@ -44,6 +53,39 @@ services:
       - "zoo1"
       - "zoo2"
       - "zoo3"
+    volumes:
+      - broker1:/var/lib/kafka/kafka-logs
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZK_CONNECT: zoo1:2181,zoo2:2182,zoo3:2183
+
+  broker2:
+    build: 
+      context: ./kafka
+      args:
+        KAFKA_VERSION: 2.2.0
+    image: kafka:2.2.0
+    hostname: broker2
+    ports:
+      - "127.0.0.1:9093:9092"
+      - "127.0.0.1:9999:9999"
+    depends_on:
+      - "zoo1"
+      - "zoo2"
+      - "zoo3"
+    volumes:
+      - broker2:/var/lib/kafka/kafka-logs
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZK_CONNECT: zoo1:2181,zoo2:2182,zoo3:2183
+      JMX_PORT: 9999
+
+volumes:
+  zoo1_data:
+  zoo1_datalog:
+  zoo2_data:
+  zoo2_datalog:
+  zoo3_data:
+  zoo3_datalog:
+  broker1:
+  broker2:
