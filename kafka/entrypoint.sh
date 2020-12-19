@@ -58,6 +58,8 @@ log.retention.check.interval.ms=${KAFKA_LOG_RETENTION_CHECK_INTERVAL_MS:-300000}
 zookeeper.connect=${KAFKA_ZK_CONNECT}
 zookeeper.connection.timeout.ms=${KAFKA_ZK_CONNECTION_TIMEOUT_MS:-6000}
 group.initial.rebalance.delay.ms=${KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS:-0}
+listeners=${KAFKA_LISTENERS:-INTERNAL://0.0.0.0:9092}
+advertised.listeners=${KAFKA_ADVERTISED_LISTENERS:-INTERNAL://0.0.0.0:9092}
 EOF
 
 # Log config

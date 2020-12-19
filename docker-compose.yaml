@@ -58,6 +58,8 @@ services:
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZK_CONNECT: zoo1:2181,zoo2:2182,zoo3:2183
+      KAFKA_LISTENERS: INTERNAL://broker1:9092,EXTERNAL://broker1:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://broker1:9092,EXTERNAL://127.0.0.1:9092
 
   broker2:
     build: 
@@ -78,6 +80,8 @@ services:
     environment:
       KAFKA_BROKER_ID: 2
       KAFKA_ZK_CONNECT: zoo1:2181,zoo2:2182,zoo3:2183
+      KAFKA_LISTENERS: INTERNAL://broker1:9092,EXTERNAL://broker1:9092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://broker1:9092,EXTERNAL://127.0.0.1:9093
       JMX_PORT: 9999
 
 volumes:
