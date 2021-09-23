@@ -60,6 +60,8 @@ zookeeper.connection.timeout.ms=${KAFKA_ZK_CONNECTION_TIMEOUT_MS:-6000}
 group.initial.rebalance.delay.ms=${KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS:-0}
 listeners=${KAFKA_LISTENERS:-INTERNAL://0.0.0.0:9092}
 advertised.listeners=${KAFKA_ADVERTISED_LISTENERS:-INTERNAL://0.0.0.0:9092}
+listener.security.protocol.map=${KAFKA_LISTENER_SECURITY_PROTOCOL_MAP:-INTERNAL:PLAINTEXT}
+inter.broker.listener.name=${KAFKA_INTER_BROKER_LISTENER_NAME:-INTERNAL}
 EOF
 
 # Log config
