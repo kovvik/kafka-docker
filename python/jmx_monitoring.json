@@ -1,0 +1,11 @@
+{
+    "test": {
+       "MessagesInPerSec": {
+           "FifteenMinuteRate": {
+               "warning": 2,
+               "critical": 1,
+               "comparator": "less_than"
+           }
+       }
+    }
+}
