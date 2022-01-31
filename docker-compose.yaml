@@ -88,6 +88,13 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
       JMX_PORT: 29999
 
+  mysql:
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+
 volumes:
   zoo1_data:
   zoo1_datalog:
