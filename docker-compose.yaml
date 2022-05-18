@@ -11,8 +11,13 @@ services:
       - zoo1_data:/data
       - zoo1_datalog:/datalog
     environment:
-      ZOO_MY_ID: 1
-      ZOO_SERVERS: server.1=0.0.0.0:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+      - ZOO_TICK_TIME
+      - ZOO_INIT_LIMIT
+      - ZOO_SYNC_LIMIT
+      - ZOO_MAX_CLIENT_CNXNS
+      - ZOO_ADMINSERVER_ENABLED
+      - ZOO_MY_ID=1
+      - ZOO_SERVERS=server.1=0.0.0.0:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
 
   zoo2:
     image: zookeeper:3.4
@@ -24,8 +29,13 @@ services:
       - zoo2_data:/data
       - zoo2_datalog:/datalog
     environment:
-      ZOO_MY_ID: 2
-      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3:2888:3888
+      - ZOO_TICK_TIME
+      - ZOO_INIT_LIMIT
+      - ZOO_SYNC_LIMIT
+      - ZOO_MAX_CLIENT_CNXNS
+      - ZOO_ADMINSERVER_ENABLED
+      - ZOO_MY_ID=2
+      - ZOO_SERVERS=server.1=zoo1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3:2888:3888
 
   zoo3:
     image: zookeeper:3.4
@@ -37,8 +47,13 @@ services:
       - zoo3_data:/data
       - zoo3_datalog:/datalog
     environment:
-      ZOO_MY_ID: 3
-      ZOO_SERVERS: server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=0.0.0.0:2888:3888
+      - ZOO_TICK_TIME
+      - ZOO_INIT_LIMIT
+      - ZOO_SYNC_LIMIT
+      - ZOO_MAX_CLIENT_CNXNS
+      - ZOO_ADMINSERVER_ENABLED
+      - ZOO_MY_ID=3
+      - ZOO_SERVERS=server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=0.0.0.0:2888:3888
 
   broker1:
     build: 
