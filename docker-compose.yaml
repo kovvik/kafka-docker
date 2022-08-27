@@ -11,11 +11,11 @@ services:
       - zoo1_data:/data
       - zoo1_datalog:/datalog
     environment:
-      - ZOO_TICK_TIME=2000
-      - ZOO_INIT_LIMIT=5
-      - ZOO_SYNC_LIMIT=2
-      - ZOO_MAX_CLIENT_CNXNS=60
-      - ZOO_ADMINSERVER_ENABLED=true
+      - ZOO_TICK_TIME=${ZOO_TICK_TIME:-2000}
+      - ZOO_INIT_LIMIT=${ZOO_INIT_LIMIT:-5}
+      - ZOO_SYNC_LIMIT=${ZOO_SYNC_LIMIT:-2}
+      - ZOO_MAX_CLIENT_CNXNS=${ZOO_MAX_CLIENT_CNXNS:-60}
+      - ZOO_ADMINSERVER_ENABLED=${ZOO_ADMINSERVER_ENABLED:-true}
       - ZOO_MY_ID=1
       - ZOO_SERVERS=server.1=0.0.0.0:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
 
@@ -29,11 +29,11 @@ services:
       - zoo2_data:/data
       - zoo2_datalog:/datalog
     environment:
-      - ZOO_TICK_TIME=2000
-      - ZOO_INIT_LIMIT=5
-      - ZOO_SYNC_LIMIT=2
-      - ZOO_MAX_CLIENT_CNXNS=60
-      - ZOO_ADMINSERVER_ENABLED=true
+      - ZOO_TICK_TIME=${ZOO_TICK_TIME:-2000}
+      - ZOO_INIT_LIMIT=${ZOO_INIT_LIMIT:-5}
+      - ZOO_SYNC_LIMIT=${ZOO_SYNC_LIMIT:-2}
+      - ZOO_MAX_CLIENT_CNXNS=${ZOO_MAX_CLIENT_CNXNS:-60}
+      - ZOO_ADMINSERVER_ENABLED=${ZOO_ADMINSERVER_ENABLED:-true}
       - ZOO_MY_ID=2
       - ZOO_SERVERS=server.1=zoo1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3:2888:3888
 
@@ -47,11 +47,11 @@ services:
       - zoo3_data:/data
       - zoo3_datalog:/datalog
     environment:
-      - ZOO_TICK_TIME=2000
-      - ZOO_INIT_LIMIT=5
-      - ZOO_SYNC_LIMIT=2
-      - ZOO_MAX_CLIENT_CNXNS=60
-      - ZOO_ADMINSERVER_ENABLED=true
+      - ZOO_TICK_TIME=${ZOO_TICK_TIME:-2000}
+      - ZOO_INIT_LIMIT=${ZOO_INIT_LIMIT:-5}
+      - ZOO_SYNC_LIMIT=${ZOO_SYNC_LIMIT:-2}
+      - ZOO_MAX_CLIENT_CNXNS=${ZOO_MAX_CLIENT_CNXNS:-60}
+      - ZOO_ADMINSERVER_ENABLED=${ZOO_ADMINSERVER_ENABLED:-true}
       - ZOO_MY_ID=3
       - ZOO_SERVERS=server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
 
@@ -59,8 +59,8 @@ services:
     build: 
       context: ./kafka
       args:
-        KAFKA_VERSION: 3.2.0
-    image: kafka:3.2.0
+        KAFKA_VERSION: ${KAFKA_VERSION:-3.2.0}
+    image: "kafka:${KAFKA_VERSION:-3.2.0}"
     hostname: broker1
     ports:
       - "127.0.0.1:9093:9093"
@@ -82,8 +82,8 @@ services:
     build: 
       context: ./kafka
       args:
-        KAFKA_VERSION: 3.2.0
-    image: kafka:3.2.0
+        KAFKA_VERSION: ${KAFKA_VERSION:-3.2.0}
+    image: "kafka:${KAFKA_VERSION:-3.2.0}"
     hostname: broker2
     ports:
       - "127.0.0.1:9094:9094"
