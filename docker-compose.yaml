@@ -59,8 +59,8 @@ services:
     build: 
       context: ./kafka
       args:
-        KAFKA_VERSION: 2.2.0
-    image: kafka:2.2.0
+        KAFKA_VERSION: 3.2.0
+    image: kafka:3.2.0
     hostname: broker1
     ports:
       - "127.0.0.1:9093:9093"
@@ -82,8 +82,8 @@ services:
     build: 
       context: ./kafka
       args:
-        KAFKA_VERSION: 2.2.0
-    image: kafka:2.2.0
+        KAFKA_VERSION: 3.2.0
+    image: kafka:3.2.0
     hostname: broker2
     ports:
       - "127.0.0.1:9094:9094"

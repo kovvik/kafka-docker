@@ -1,10 +1,10 @@
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
 ARG KAFKA_VERSION
-ENV KAFKA_VERSION=${KAFKA_VERSION:-2.2.0}
+ENV KAFKA_VERSION=${KAFKA_VERSION:-3.2.0}
 
 RUN apt-get update && \
-    apt-get install -y openjdk-8-jre-headless wget &&\
+    apt-get install -y openjdk-17-jre-headless wget &&\
     apt-get clean
 
 RUN wget https://archive.apache.org/dist/kafka/${KAFKA_VERSION}/kafka_2.12-${KAFKA_VERSION}.tgz -O /tmp/kafka_2.12-${KAFKA_VERSION}.tgz && \
