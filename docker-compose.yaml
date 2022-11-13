@@ -55,6 +55,15 @@ services:
       - ZOO_MY_ID=3
       - ZOO_SERVERS=server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
 
+  zoonavigator:
+    image: "elkozmon/zoonavigator:${ZOONAVIGATOR_VERSION:-1.1.2}"
+    restart: always
+    hostname: zoonavigator
+    ports:
+      - "127.0.0.1:9000:9000"
+    environment:
+      - HTTP_PORT:9000
+
   broker1:
     build: 
       context: ./kafka
