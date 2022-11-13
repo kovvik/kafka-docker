@@ -45,11 +45,11 @@ class ZKStatus:
         '''
         # Check the commands
         try:
-            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                s.connect((HOST, PORT))
-                s.sendall(command)
-                data = s.recv(1024)
-        except ConnectionRefusedError as e:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as zk_socket:
+                zk_socket.connect((self.zk_host, self.zk_port))
+                zk_socket.sendall(command)
+                data = zk_socket.recv(1024)
+        except ConnectionRefusedError:
             return False
         return data
 
