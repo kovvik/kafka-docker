@@ -62,6 +62,15 @@ listeners=${KAFKA_LISTENERS:-INTERNAL://0.0.0.0:9092}
 advertised.listeners=${KAFKA_ADVERTISED_LISTENERS:-INTERNAL://0.0.0.0:9092}
 listener.security.protocol.map=${KAFKA_LISTENER_SECURITY_PROTOCOL_MAP:-INTERNAL:PLAINTEXT}
 inter.broker.listener.name=${KAFKA_INTER_BROKER_LISTENER_NAME:-INTERNAL}
+ssl.keystore.password=${KAFKA_SSL_KEYSTORE_PASSWORD}
+ssl.keystore.location=${KAFKA_SSL_KEYSTORE_LOCATION}
+ssl.client.auth=${KAFKA_SSL_CLIENT_AUTH:-none}
+ssl.truststore.password=${KAFKA_SSL_TRUSTSTORE_PASSWORD}
+ssl.truststore.location=${KAFKA_SSL_TRUSTSTORE_LOCATION}
+ssl.truststore.type=PKCS12
+ssl.keystore.type=PKCS12
+listener.name.internal.ssl.endpoint.identification.algorithm=
+ssl.endpoint.identification.algorithm=
 EOF
 
 # Log config

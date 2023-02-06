@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 
 ARG KAFKA_VERSION
-ENV KAFKA_VERSION=${KAFKA_VERSION:-3.2.0}
+ENV KAFKA_VERSION=${KAFKA_VERSION:-3.3.2}
 
 RUN apt-get update && \
     apt-get install -y openjdk-17-jre-headless wget &&\
