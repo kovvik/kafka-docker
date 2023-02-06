@@ -1,5 +1,5 @@
 ---
-version: '3'
+version: '3.4'
 services:
   zoo1:
     image: zookeeper:3.4
@@ -18,6 +18,12 @@ services:
       - ZOO_ADMINSERVER_ENABLED=${ZOO_ADMINSERVER_ENABLED:-true}
       - ZOO_MY_ID=1
       - ZOO_SERVERS=server.1=0.0.0.0:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+    healthcheck:
+      test: nc -z localhost 2181 || exit -1
+      start_period: 20s
+      interval: 5s
+      timeout: 10s
+      retries: 10
 
   zoo2:
     image: zookeeper:3.4
@@ -36,6 +42,12 @@ services:
       - ZOO_ADMINSERVER_ENABLED=${ZOO_ADMINSERVER_ENABLED:-true}
       - ZOO_MY_ID=2
       - ZOO_SERVERS=server.1=zoo1:2888:3888 server.2=0.0.0.0:2888:3888 server.3=zoo3:2888:3888
+    healthcheck:
+      test: nc -z localhost 2181 || exit -1
+      start_period: 20s
+      interval: 5s
+      timeout: 10s
+      retries: 10
 
   zoo3:
     image: zookeeper:3.4
@@ -54,6 +66,12 @@ services:
       - ZOO_ADMINSERVER_ENABLED=${ZOO_ADMINSERVER_ENABLED:-true}
       - ZOO_MY_ID=3
       - ZOO_SERVERS=server.1=zoo1:2888:3888 server.2=zoo2:2888:3888 server.3=zoo3:2888:3888
+    healthcheck:
+      test: nc -z localhost 2181 || exit -1
+      start_period: 20s
+      interval: 5s
+      timeout: 10s
+      retries: 10
 
   zoonavigator:
     image: "elkozmon/zoonavigator:${ZOONAVIGATOR_VERSION:-1.1.2}"
@@ -74,9 +92,12 @@ services:
     ports:
       - "127.0.0.1:9093:9093"
     depends_on:
-      - "zoo1"
-      - "zoo2"
-      - "zoo3"
+      zoo1:
+        condition: service_healthy
+      zoo2:
+        condition: service_healthy
+      zoo3:
+        condition: service_healthy
     volumes:
       - broker1:/var/lib/kafka/kafka-logs
       - ./certs/keystores:/usr/local/kafka/keystores
@@ -105,9 +126,12 @@ services:
       - "127.0.0.1:9094:9094"
       - "127.0.0.1:29999:29999"
     depends_on:
-      - "zoo1"
-      - "zoo2"
-      - "zoo3"
+      zoo1:
+        condition: service_healthy
+      zoo2:
+        condition: service_healthy
+      zoo3:
+        condition: service_healthy
     volumes:
       - broker2:/var/lib/kafka/kafka-logs
       - ./certs/keystores:/usr/local/kafka/keystores
