@@ -150,6 +150,30 @@ services:
       - KAFKA_DEFAULT_REPLICATION_FACTOR
       - JMX_PORT=29999
 
+  connect:
+    build:
+      context: .kafka
+      args:
+        KAFKA_VERSION: ${KAFKA_VERSION:-3.3.2}
+    image: "kafka:${KAFKA_VERSION:-3.3.2}"
+    hostname: connect
+    ports:
+      - "127.0.0.1:8083:8083"
+    depends_on:
+      zoo1:
+        condition: service_healthy
+      zoo2:
+        condition: service_healthy
+      zoo3:
+        condition: service_healthy
+    volumes:
+      - ./kafka-connect:/usr/local/kafka-connect
+    entrypoint:
+      - /usr/local/kafka/bin/connect-distributed.sh
+      - /usr/local/kafka-connect/connect-distributed.properties
+    extra_hosts:
+          - "host.docker.internal:host-gateway"
+
 volumes:
   zoo1_data:
   zoo1_datalog:
