@@ -3,7 +3,7 @@
 # Required environment variables:
 #
 # KAFKA_BROKER_ID
-# KAFKA_ZK_CONNECT
+# KAFKA_CLUSTER_ID
 #
 # Optional environment variables:
 #
@@ -21,7 +21,6 @@
 # KAFKA_LOG_RETENTION_HOURS
 # KAFKA_LOG_SEGMENT_BYTES
 # KAFKA_LOG_RETENTION_CHECK_INTERVAL_MS
-# KAFKA_ZK_CONNECTION_TIMEOUT_MS
 # KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS
 
 # Check required variables
@@ -31,9 +30,9 @@ then
         exit 1
 fi
 
-if [ -z "${KAFKA_ZK_CONNECT:+SET}" ]
+if [ -z "${KAFKA_CLUSTER_ID:+SET}" ]
 then
-        echo "KAFKA_ZK_CONNECT is not set"
+        echo "KAFKA_CLUSTER_ID is not set"
         exit 1
 fi
 
@@ -55,8 +54,6 @@ transaction.state.log.min.isr=${KAFKA_TRANSACTION_STATE_LOG_MIN_ISR:-1}
 log.retention.hours=${KAFKA_LOG_RETENTION_HOURS:-120}
 log.segment.bytes=${KAFKA_LOG_SEGMENT_BYTES:-1048576}
 log.retention.check.interval.ms=${KAFKA_LOG_RETENTION_CHECK_INTERVAL_MS:-300000}
-zookeeper.connect=${KAFKA_ZK_CONNECT}
-zookeeper.connection.timeout.ms=${KAFKA_ZK_CONNECTION_TIMEOUT_MS:-6000}
 group.initial.rebalance.delay.ms=${KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS:-0}
 listeners=${KAFKA_LISTENERS:-INTERNAL://0.0.0.0:9092}
 advertised.listeners=${KAFKA_ADVERTISED_LISTENERS:-INTERNAL://0.0.0.0:9092}
