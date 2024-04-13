@@ -2,7 +2,7 @@
 version: '3.4'
 services:
   broker1:
-    build: 
+    build:
       context: ./kafka
       args:
         KAFKA_VERSION: ${KAFKA_VERSION:-3.3.2}
@@ -27,7 +27,7 @@ services:
       - KAFKA_DEFAULT_REPLICATION_FACTOR
 
   broker2:
-    build: 
+    build:
       context: ./kafka
       args:
         KAFKA_VERSION: ${KAFKA_VERSION:-3.3.2}
@@ -53,6 +53,31 @@ services:
       - KAFKA_DEFAULT_REPLICATION_FACTOR
       - JMX_PORT=29999
 
+  broker3:
+    build:
+      context: ./kafka
+      args:
+        KAFKA_VERSION: ${KAFKA_VERSION:-3.3.2}
+    image: "kafka:${KAFKA_VERSION:-3.3.2}"
+    hostname: broker3
+    ports:
+      - "127.0.0.1:9095:9095"
+    volumes:
+      - broker3:/var/lib/kafka/kafka-logs
+      - ./certs/keystores:/usr/local/kafka/keystores
+    environment:
+      - KAFKA_BROKER_ID=3
+      - KAFKA_LISTENERS=INTERNAL://broker3:9092,EXTERNAL://:9095
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=${KAFKA_LISTENER_SECURITY_PROTOCOL_MAP:-INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT}
+      - KAFKA_ADVERTISED_LISTENERS=INTERNAL://broker3:9092,EXTERNAL://127.0.0.1:9095
+      - KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL
+      - KAFKA_SSL_TRUSTSTORE_LOCATION
+      - KAFKA_SSL_TRUSTSTORE_PASSWORD
+      - KAFKA_SSL_KEYSTORE_LOCATION=${KAFKA_SSL_KEYSTORE_LOCATION}/broker3.keystore.jks
+      - KAFKA_SSL_KEYSTORE_PASSWORD
+      - KAFKA_SSL_CLIENT_AUTH
+      - KAFKA_DEFAULT_REPLICATION_FACTOR
+
   connect:
     build:
       context: .kafka
@@ -68,8 +93,9 @@ services:
       - /usr/local/kafka/bin/connect-distributed.sh
       - /usr/local/kafka-connect/connect-distributed.properties
     extra_hosts:
-          - "host.docker.internal:host-gateway"
+      - "host.docker.internal:host-gateway"
 
 volumes:
   broker1:
   broker2:
+  broker3:
