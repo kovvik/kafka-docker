@@ -37,6 +37,7 @@ then
 fi
 
 # Set config
+truncate -s0 /usr/local/kafka/config/server.properties
 cat << EOF > /usr/local/kafka/config/server.properties
 broker.id=${KAFKA_BROKER_ID}
 process.roles=broker,controller
