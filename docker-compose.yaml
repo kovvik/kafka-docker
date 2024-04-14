@@ -85,7 +85,7 @@ services:
 
   connect:
     build:
-      context: .kafka
+      context: ./kafka
       args:
         KAFKA_VERSION: ${KAFKA_VERSION:-3.7.0}
     image: "kafka:${KAFKA_VERSION:-3.7.0}"
