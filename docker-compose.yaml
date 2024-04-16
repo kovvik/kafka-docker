@@ -5,7 +5,8 @@ services:
       context: ./kafka
       args:
         KAFKA_VERSION: ${KAFKA_VERSION:-3.7.0}
-    image: "kafka:${KAFKA_VERSION:-3.7.0}"
+      target: kafka-broker
+    image: "kafka-broker:${KAFKA_VERSION:-3.7.0}"
     hostname: broker1
     ports:
       - "127.0.0.1:9093:9093"
@@ -32,7 +33,8 @@ services:
       context: ./kafka
       args:
         KAFKA_VERSION: ${KAFKA_VERSION:-3.7.0}
-    image: "kafka:${KAFKA_VERSION:-3.7.0}"
+      target: kafka-broker
+    image: "kafka-broker:${KAFKA_VERSION:-3.7.0}"
     hostname: broker2
     ports:
       - "127.0.0.1:9094:9094"
@@ -61,7 +63,8 @@ services:
       context: ./kafka
       args:
         KAFKA_VERSION: ${KAFKA_VERSION:-3.7.0}
-    image: "kafka:${KAFKA_VERSION:-3.7.0}"
+      target: kafka-broker
+    image: "kafka-broker:${KAFKA_VERSION:-3.7.0}"
     hostname: broker3
     ports:
       - "127.0.0.1:9095:9095"
@@ -88,15 +91,29 @@ services:
       context: ./kafka
       args:
         KAFKA_VERSION: ${KAFKA_VERSION:-3.7.0}
-    image: "kafka:${KAFKA_VERSION:-3.7.0}"
+      target: kafka-connect
+    image: "kafka-connect:${KAFKA_VERSION:-3.7.0}"
     hostname: connect
     ports:
       - "127.0.0.1:8083:8083"
     volumes:
       - ./kafka-connect:/usr/local/kafka-connect
-    entrypoint:
-      - /usr/local/kafka/bin/connect-distributed.sh
-      - /usr/local/kafka-connect/connect-distributed.properties
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS=broker1:9092,broker2:9092,broker3:9092
+      - KAFKA_GROUP_ID=connect
+      - KAFKA_KEY_CONVERTER
+      - KAFKA_VALUE_CONVERTER
+      - KAFKA_KEY_CONVERTER_SCHEMAS_ENABLE
+      - KAFKA_VALUE_CONVERTER_SCHEMAS_ENABLE
+      - KAFKA_REPLICATION_FACTOR
+      - KAFKA_OFFSET_FLUSH_INTERVAL_MS
+      - KAKFA_REST_PORT
+      - KAFKA_SSL_KEYSTORE_PASSWORD
+      - KAFKA_SSL_KEYSTORE_LOCATION
+      - KAFKA_SSL_CLIENT_AUTH
+      - KAFKA_SSL_TRUSTSTORE_PASSWORD
+      - KAFKA_SSL_TRUSTSTORE_LOCATION
+
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
