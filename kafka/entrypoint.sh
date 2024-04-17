@@ -39,7 +39,7 @@ fi
 # Set config
 truncate -s0 /usr/local/kafka/config/server.properties
 cat << EOF > /usr/local/kafka/config/server.properties
-broker.id=${KAFKA_BROKER_ID}
+broker.id=${KAFKA_BROKER_ID: -1}
 process.roles=broker,controller
 controller.quorum.voters=${KAFKA_CONTROLLER_QUORUM_VOTERS:-1@localhost:9093}
 num.network.threads=${KAFKA_NUM_NETWORK_THREADS:-3}
